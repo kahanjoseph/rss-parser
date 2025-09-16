@@ -45,10 +45,10 @@
     <table>
         <thead>
             <tr>
+                <th>Date</th>
                 <th>Data</th>
                 <th>Type</th>
                 <th>Link</th>
-                <th>Date</th>
             </tr>
         </thead>
         <tbody>
