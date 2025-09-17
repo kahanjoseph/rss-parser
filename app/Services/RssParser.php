@@ -32,10 +32,11 @@ class RssParser{
     }
 
 
-    private function extractGoogleItem($item, $field){
+    private function extractGoogleItem($item) : array {
+
         return [
-            'data' => preg_replace('/(google)/i', "<span class=\"text-red-500\">$1</span>", htmlspecialchars($item->$field)),
-            'type' => $field,
+            'description' => preg_replace('/(google)/i', "<span class=\"text-red-500\">$1</span>", htmlspecialchars($item->description)),
+            'title' => preg_replace('/(google)/i', "<span class=\"text-red-500\">$1</span>", htmlspecialchars($item->title)),
             'link' => $item->link,
             'date' => $item->pubDate
         ];
@@ -45,14 +46,9 @@ class RssParser{
         $count = 0;
         $formattedData = [];
         foreach ($this->feed->channel->item as $item) {
-            if(str_contains(strtolower($item->description), 'google')){
-                $count += substr_count(strtolower($item->description), 'google');
-                $formattedData[] = $this->extractGoogleItem($item, 'description');
-            }
-
-            if(str_contains(strtolower($item->title), 'google')){
-                $count += substr_count(strtolower($item->title), 'google');
-                $formattedData[] = $this->extractGoogleItem($item, 'title');
+            if(str_contains(strtolower($item->description . $item->title), 'google')){
+                $count += substr_count(strtolower($item->description . $item->title), 'google');
+                $formattedData[] = $this->extractGoogleItem($item);
             }
         }
         return [

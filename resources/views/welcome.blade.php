@@ -11,60 +11,39 @@
         .text-red-500 {
             color: red;
         }
-        table {
-          font-family: Arial, Helvetica, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
+
+        .grid-container {
+          display: grid;
+          grid-template-columns: 100%;
+          grid-gap: 1rem;
         }
 
-        td, th {
-          border: 1px solid #ddd;
-          padding: 8px;
+        .card {
+          background-color: #fff;
+          border-radius: 0.5rem;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          padding: 1rem 2rem;
         }
 
-        tr:nth-child(even){background-color: #f2f2f2;}
-
-        tr:hover {background-color: #ddd;}
-
-        th {
-          padding-top: 12px;
-          padding-bottom: 12px;
-          text-align: left;
-          background-color: #04AA6D;
-          color: white;
+        a {
+            color: black;
         }
-
-    a {
-        color: black;
-    }
     </style>
 </head>
 <body>
     <h1>Times Google appears in feed: {{ $googleCount }}</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Data</th>
-                <th>Type</th>
-                <th>Link</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($formattedData as $item)
-                <tr>
-                    <td>{{ date('m-d-Y', strtotime($item['date'])) }}</td>
-                    <td>
-                        {!!  $item['data'] !!}
-                    </td>
-                    <td>{{ $item['type'] }}</td>
-                    <td><a href="{{ $item['link'] }}" target="_blank">{{ $item['link'] }}</a></td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-
+    <div class="grid-container">
+        @foreach ($formattedData as $item)
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">{!! $item['title'] !!}</h2>
+                    <p class="card-text">{!! $item['description'] !!}</p>
+                    <a href="{{ $item['link'] }}" target="_blank" class="btn btn-primary">View</a>
+                    <p>{{ date('m-d-Y', strtotime($item['date'])) }}</p>
+                </div>
+            </div>
+        @endforeach
+    </div>
 </body>
 </html>
